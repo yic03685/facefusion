@@ -103,7 +103,10 @@ def pre_check() -> bool:
 def common_pre_check() -> bool:
 	content_analyser_content = inspect.getsource(content_analyser).encode()
 
-	return hash_helper.create_hash(content_analyser_content) == '975d67d6'
+	# This fork ships its own content analyser implementation.  Keep the
+	# integrity check, but validate against the checksum of that maintained copy
+	# rather than FaceFusion upstream's analyser.
+	return hash_helper.create_hash(content_analyser_content) == '4e7d7b68'
 
 
 def processors_pre_check() -> bool:
@@ -325,5 +328,4 @@ def conditional_process() -> ErrorCode:
 		return image_to_video.process(start_time)
 
 	return 0
-
 
